@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Info Sistem</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff5f8;
+        }
+        .info-box {
+            background-color: #ffeaf3;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="info-box mx-auto" style="max-width: 700px;">
+            <h2 class="text-center mb-3">💡 Tentang Sistem</h2>
+            <p>Sistem ini menggunakan kombinasi fitur <strong>GLCM</strong> (tekstur) dan <strong>HSV</strong> (warna) untuk menilai kematangan jambu biji berdasarkan citra.</p>
+            <p>Model yang digunakan adalah <strong>KNN (K-Nearest Neighbors)</strong>, yang mengklasifikasikan gambar ke dalam dua kelas: <em>matang</em> dan <em>mentah</em>.</p>
+            <p>Unggah gambar jambu untuk melihat hasil prediksinya!</p>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary mt-3">← Kembali ke Beranda</a>
+        </div>
+    </div>
+</body>
+</html>

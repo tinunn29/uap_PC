@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Prediksi Kematangan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffeef5;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            background: #fff0f6;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h2 {
+            font-size: 2rem;
+            color: #c2185b;
+        }
+
+        .image-preview {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 1rem;
+            border-radius: 15px;
+            border: 1px solid #e0aabb;
+            box-shadow: 0 4px 10px rgba(255, 192, 203, 0.4);
+        }
+
+        .prediction-box {
+            background: #fce4ec;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            border: 2px solid #f8bbd0;
+        }
+
+        .prediction-box strong {
+            display: block;
+            font-size: 1.4rem;
+            color: #880e4f;
+            margin-top: 0.5rem;
+        }
+
+        .features-section {
+            margin-top: 2rem;
+        }
+
+        .features-section h3 {
+            text-align: center;
+            color: #ad1457;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .feature-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background-color: #ff80ab;
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff5c8d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🌸 Hasil Prediksi Kematangan 🌸</h2>
+        </div>
+
+        <img src="{{ url_for('static', filename='uploads/' + result.filename) }}" alt="Gambar Jambu Biji"
+            class="image-preview">
+
+        <div class="prediction-box">
+            <div>Prediksi: <strong>{{ result.prediction|capitalize }}</strong></div>
+            <div>Tingkat Keyakinan: <strong>{{ result.confidence }}%</strong></div>
+        </div>
+
+        {% if result.method == 'KNN' and result.features %}
+        <div class="features-section">
+            <h3>Fitur GLCM + HSV</h3>
+            <div class="feature-list">
+                {% for item in result.features %}
+                <div class="feature-item">
+                    {{ item.name }}: {{ item.value }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="actions">
+            <a href="{{ url_for('index') }}" class="btn">Prediksi Ulang</a>
+            <a href="{{ url_for('info') }}" class="btn">Tentang Sistem</a>
+        </div>
+    </div>
+</body>
+
+</html>

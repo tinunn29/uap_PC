@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>🌸 CitraScope | Hasil Prediksi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff0f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            background-color: #ffe4ec;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.25);
+        }
+        .btn-pink {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            transition: background 0.3s;
+        }
+        .btn-pink:hover {
+            background-color: #ff4c9b;
+        }
+        .feature-card {
+            background-color: #fff;
+            border-left: 5px solid #ff69b4;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 6px rgba(255, 105, 180, 0.1);
+        }
+        .prediction-box {
+            background: linear-gradient(135deg, #ffdde8, #ffe6f0);
+            border: 2px solid #fcb1d1;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+        .prediction-box h4 {
+            font-size: 1.4rem;
+            color: #d63384;
+        }
+        .prediction-box .confidence {
+            font-size: 1rem;
+            color: #555;
+        }
+        .image-wrapper {
+            background-color: #ffffff;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .image-wrapper img {
+            border-radius: 10px;
+            max-height: 300px;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            color: #c2185b;
+            font-weight: 600;
+            margin-top: 1.2rem;
+        }
+        .cnn-explanation ul {
+            padding-left: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">🌸 CitraScope - Hasil Prediksi Kematangan 🌸</h2>
+
+    <div class="card mx-auto p-4" style="max-width: 700px;">
+        <!-- Gambar hasil -->
+        <div class="image-wrapper mb-4">
+            <img src="{{ url_for('static', filename='uploads/' + result.filename) }}" class="img-fluid" alt="Gambar Hasil">
+            <p class="mt-2 text-muted"><strong>File:</strong> {{ result.filename }}</p>
+        </div>
+
+        <!-- Box prediksi -->
+        <div class="prediction-box">
+            <div class="emoji mb-2" style="font-size: 2rem;">🍈</div>
+            <h4>Jambu {{ result.prediction|capitalize }}</h4>
+            <div class="confidence">Tingkat Keyakinan: {{ result.confidence }}%</div>
+        </div>
+
+        <!-- Fitur atau penjelasan -->
+        {% if result.method == 'KNN' %}
+            <div class="section-title">Fitur Ekstraksi (GLCM + HSV)</div>
+            {% for feature in result.features %}
+                <div class="feature-card d-flex justify-content-between">
+                    <span>{{ feature.name }}</span>
+                    <span>{{ feature.value }}</span>
+                </div>
+            {% endfor %}
+        {% elif result.method == 'CNN' %}
+            <div class="section-title">🧠 Penjelasan Model CNN</div>
+            <div class="cnn-explanation">
+                <p><strong>Convolutional Neural Network (CNN)</strong> adalah model deep learning yang sangat efektif untuk analisis gambar.</p>
+                <ul>
+                    <li><strong>Convolution Layer:</strong> Mendeteksi pola visual penting seperti tekstur dan tepi.</li>
+                    <li><strong>Pooling Layer:</strong> Mengurangi ukuran data sambil mempertahankan fitur penting.</li>
+                    <li><strong>Dense Layer:</strong> Menyusun fitur untuk menghasilkan prediksi akhir.</li>
+                    <li><strong>Activation Function:</strong> Membantu jaringan belajar pola non-linear.</li>
+                    <li><strong>Dropout:</strong> Menghindari overfitting dengan menonaktifkan neuron secara acak saat pelatihan.</li>
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-pink w-100">🔁 Analisis Gambar Lain</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
